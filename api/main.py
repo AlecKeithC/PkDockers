@@ -46,7 +46,7 @@ def get_db():
 def read_parkings(conn: psycopg2.extensions.connection = Depends(get_db)):
     global last_updates
     cur = conn.cursor()
-    cur.execute("SELECT * FROM parking_lot")
+    cur.execute("SELECT * FROM parking")
     rows = cur.fetchall()
     parkings = []
     for row in rows:
@@ -77,7 +77,7 @@ def read_parkings(conn: psycopg2.extensions.connection = Depends(get_db)):
 @app.get("/parkings/{parking_id}", response_model=ParkingResponse)
 def read_parking(parking_id: int, conn: psycopg2.extensions.connection = Depends(get_db)):
     cur = conn.cursor()
-    cur.execute(f"SELECT * FROM parking_lot WHERE id = {parking_id}")
+    cur.execute(f"SELECT * FROM parking WHERE id = {parking_id}")
     row = cur.fetchone()
     if row is None:
         raise HTTPException(status_code=404, detail="Parking not found")

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=parkingdb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=detectaudec
+    ports:
+      - "32783:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  api:
+    build: ./api
+    environment:
+      - DATABASE_URL=postgres://admin:detectaudec@db:5432/parkingdb
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
+

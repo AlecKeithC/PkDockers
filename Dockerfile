@@ -1,8 +1,8 @@
-FROM postgres:lastest
+FROM postgres:latest
 
-ENV POSTGRES_USER admin
-ENV POSTGERS_PASSWORD detectaudec
-ENV POSTGERS_DB parkingdb
+ENV POSTGRES_USER=admin
+ENV POSTGRES_PASSWORD=detectaudec
+ENV POSTGRES_DB=parkingdb
 
 COPY init_db.sql /docker-entrypoint-initdb.d/
 

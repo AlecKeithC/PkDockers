@@ -6,5 +6,3 @@ ENV POSTGERS_DB parkingdb
 
 COPY init_db.sql /docker-entrypoint-initdb.d/
 
-
-# Path: /docker-entrypoint-initdb.d/init.sql

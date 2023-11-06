@@ -6,7 +6,7 @@ from typing import List
 from datetime import datetime
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgres://admin:detectaudec@192.168.1.85:32783/parkingdb"
+    DATABASE_URL: str = "postgres://admin:detectaudec@192.168.1.84:32783/parkingdb"
 
 settings = Settings()
 

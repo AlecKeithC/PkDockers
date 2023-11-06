@@ -7,10 +7,11 @@ services:
       - POSTGRES_DB=parkingdb
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=detectaudec
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgre-db/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     ports:
       - "32783:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
 
   api:
     build: ./api
@@ -19,8 +20,41 @@ services:
     depends_on:
       - db
     ports:
-      - "8000:8000"
+      - "32784:8000"
+
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
+    environment:
+      DB_MYSQL_HOST: dbd
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: npm
+      DB_MYSQL_PASSWORD: npm
+      DB_MYSQL_NAME: npm
+      DB_MYSQL_TIMEOUT: 20000
+    depends_on:
+      - dbd
+
+  dbd:
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root_password'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - dbd_data:/var/lib/mysql
 
 volumes:
   postgres_data:
-
+  dbd_data:
+  npm_data:
+  npm_letsencrypt:

@@ -22,8 +22,15 @@ Antes de iniciar los servicios con Docker Compose, debes configurar los puertos 
 
 Para construir e iniciar los servicios, ejecuta el siguiente comando en el directorio raíz del proyecto:
 
-  ```bash
+  ``bash
   docker-compose up --build
 
+### Configurar NGINX Proxy Manager (NPM)
 
-  
+Iniciados los servicios, 
+- ingresar a http://(ip_donde_se_ejecuta_el_contenedor):81 aquí se abrirá el "Login" de NPM, para iniciar sesión por primera vez usa el email: admin@example.com y la contraseña: changeme, modificar los datos que se pedirán.
+- Añadir un Proxy host, recuerda tener un dominio listo, añádelo.
+- Configurar la ip (ip_donde_se_ejecuta_el_contenedor), en "Forward Port" escribir el puerto donde se ejecuta la API (32784 en el Docker-compose.yml, es modificable a cualquier puerto).
+- Configurar certificado SSL gratis, en el apartado "SSL". (Se requiere para funcionar con la aplicación móvil)
+
+## ¡El servidor ya está configurado!

@@ -6,7 +6,7 @@ from typing import List
 from datetime import datetime
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgres://admin:detectaudec@192.168.1.84:32783/parkingdb"
+    DATABASE_URL: str = "postgres://USER:PASSWORD@IP:PUERTO/parkingdb" #Datos de la DB creada en docker-compose.yml y /postgre-db
 
 settings = Settings()
 
@@ -32,7 +32,7 @@ class ParkingResponse(Parking):
 
 app = FastAPI(title="EstacionaUdec API", description="API para el monitoreo de espacios de estacionamiento en el campus universitario", version="1.0")
 
-# Definimos un diccionario que almacena la última actualización y los espacios libres
+# Diccionario que almacena la última actualización y los espacios libres
 last_updates = {}
 
 def get_db():

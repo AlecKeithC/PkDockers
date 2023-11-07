@@ -1,6 +1,6 @@
 # PkDockers
 
-[Breve descripción de tu proyecto, qué hace y cualquier otra información relevante que los usuarios o desarrolladores deban saber.]
+¡Bienvenido a PkDockers! Aquí se encuentra las instrucciones para instalar e iniciar el servidor para la aplicación de ParkingUdec.
 
 ## Requisitos Previos
 

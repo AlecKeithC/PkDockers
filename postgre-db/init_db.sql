@@ -14,3 +14,7 @@ CREATE TABLE IF NOT EXISTS parking (
     last_update TIMESTAMP NOT NULL,
     estatica BOOLEAN NOT NULL
 );
+CREATE TABLE IF NOT EXISTS parking_status (
+    id SERIAL PRIMARY KEY,
+    out_of_range BOOLEAN NOT NULL
+);

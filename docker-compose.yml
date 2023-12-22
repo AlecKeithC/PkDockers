@@ -5,18 +5,19 @@ services:
     image: postgres:latest
     environment:
       - POSTGRES_DB=parkingdb
-      - POSTGRES_USER=USER
-      - POSTGRES_PASSWORD=PASSWORD
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgre-db/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     ports:
-      - "PUERTO:5432"
+      - "32783:5432"
 
   api:
     build: ./api
     environment:
-      - DATABASE_URL=postgres://USER:PASSWORD@db:5432/parkingdb
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/parkingdb
+      - TZ=America/Santiago
     depends_on:
       - db
     ports:

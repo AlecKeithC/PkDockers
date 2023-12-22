@@ -4,9 +4,10 @@ from fastapi import FastAPI, Depends, HTTPException
 import psycopg2
 from typing import List
 from datetime import datetime
-
+import threading
+import time
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgres://admin:detectaudec@192.168.1.84:32783/parkingdb"
+    DATABASE_URL: str = "postgres://admin:detectaudec@192.168.1.81:32783/parkingdb"
 
 settings = Settings()
 
@@ -25,11 +26,12 @@ class Parking(BaseModel):
     active: bool
     last_update: datetime
     estatica:bool
+    out_of_range:bool
 
 class ParkingResponse(Parking):
     class Config:
         from_attributes = True
-
+        
 app = FastAPI(title="EstacionaUdec API", description="API para el monitoreo de espacios de estacionamiento en el campus universitario", version="1.0")
 
 # Definimos un diccionario que almacena la última actualización y los espacios libres
@@ -41,6 +43,17 @@ def get_db():
         yield conn
     finally:
         conn.close()
+
+def update_last_updates():
+    while True:
+        with get_db() as conn:
+            cur = conn.cursor()
+            cur.execute("UPDATE parking SET last_update = %s WHERE estatica = False", (datetime.now(),))
+            conn.commit()
+        time.sleep(5)
+
+# Iniciar el hilo para actualizar last_update
+threading.Thread(target=update_last_updates, daemon=True).start()
 
 @app.get("/parkings/", response_model=List[ParkingResponse])
 def read_parkings(conn: psycopg2.extensions.connection = Depends(get_db)):
@@ -69,7 +82,7 @@ def read_parkings(conn: psycopg2.extensions.connection = Depends(get_db)):
             id=row[0], free_spaces=free_spaces, total_spaces=row[2], pk_name=row[3],
             latitude=row[4], longitude=row[5], reduced_capacity=row[6], academico=row[7],
             estudiante=row[8], administrativo=row[9], otro=row[10], active=row[11],
-            last_update=last_update, estatica=estatica
+            last_update=last_update, estatica=estatica, out_of_range=row[14]
         )
         parkings.append(parking)
 
@@ -84,6 +97,7 @@ def read_parking(parking_id: int, conn: psycopg2.extensions.connection = Depends
     parking = ParkingResponse(
         id=row[0], free_spaces=row[1], total_spaces=row[2], pk_name=row[3],
         latitude=row[4], longitude=row[5], reduced_capacity=row[6], academico=row[7],
-        estudiante=row[8], administrativo=row[9], otro=row[10], active=row[11], last_update= row[12], estatica = row[13]
+        estudiante=row[8], administrativo=row[9], otro=row[10], active=row[11], last_update= row[12], estatica = row[13], 
+        out_of_range=row[14]
     )
     return parking

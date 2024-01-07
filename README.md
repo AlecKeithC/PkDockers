@@ -17,7 +17,7 @@ Antes de iniciar los servicios con Docker Compose, debes configurar los puertos 
 
 - Ejecuta el comando git clone https://github.com/AlecKeithC/PkDockers.git en un nuevo directorio.
 - En PkDockers, encuentra las instrucciones para las variables de entorno en ".env" USER y PASSWORD y sustitúyelas con el nombre de usuario y la contraseña que desees configurar para la base de datos.
-- En api/main.py, busca la línea que define el puerto y reemplaza "PUERTO" con el puerto que desees utilizar para el servicio de la API. También actualiza los campos con los datos de la DB, seleccionados en postgre-db/Dockerfile.
+- En api/main.py, busca la línea que define el puerto y reemplaza "PUERTO" con el puerto que desees utilizar para el servicio de la API (recomendado el que está por defecto). También actualiza los campos con los datos de de USER y PASSWORD definidos en ".env".
 - En docker-compose.yml, actualiza todas las instancias de "PUERTO" bajo los servicios para que coincidan con los puertos que has decidido exponer. Asegúrate de que estos puertos estén disponibles y no estén siendo utilizados por otro servicio en tu sistema. También actualiza los campos con los datos de la DB, seleccionados en postgre-db/Dockerfile.
   
 ### Iniciar los Servicios

@@ -31,7 +31,7 @@ Para construir e iniciar los servicios, ejecuta el siguiente comando en el direc
 
 Iniciados los servicios, 
 - ingresar a http://(ip_donde_se_ejecuta_el_contenedor):81 aquí se abrirá el "Login" de NPM, para iniciar sesión por primera vez usa el email: admin@example.com y la contraseña: changeme, modificar los datos que se pedirán.
-- Añadir un Proxy host, recuerda tener un dominio listo, añádelo.
+- Añadir un Proxy host, recuerda tener un dominio listo, recomendado utilizar [NO-IP](https://www.noip.com/) (es gratis) para no exponer la dirección ip pública, añádelo.
 - Configurar la ip (ip_donde_se_ejecuta_el_contenedor), en "Forward Port" escribir el puerto donde se ejecuta la API (32784 en el Docker-compose.yml, es modificable a cualquier puerto).
 - Configurar certificado SSL gratis, en el apartado "SSL". (Se requiere para funcionar con la aplicación móvil)
 

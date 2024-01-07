@@ -7,7 +7,7 @@ from datetime import datetime
 import threading
 import time
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgres://admin:detectaudec@192.168.1.81:32783/parkingdb" #admin = user, detectaudec = password, 192.168.1.81 = ip, 32783 = port, parkingdb = database
+    DATABASE_URL: str = "postgres://POSTGRESUSER:PASSWORD@IPDELEQUIPO:32783/parkingdb" #32783 = port, parkingdb = database nombre
 
 settings = Settings()
 
